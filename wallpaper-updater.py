@@ -32,7 +32,7 @@ IMG_PATH = os.getcwd() + os.path.sep + 'newest_image.jpg'
 # path to newest cropped image (absolute path must be used with ctypes)
 CROPPED_IMG_PATH = os.getcwd() + os.path.sep + 'newest_cropped_image.jpg'
 # watermark definitions
-FONT = ImageFont.truetype(font="Pillow/Tests/fonts/arial.ttf", size=50)
+FONT = ImageFont.truetype(font="arial.ttf", size=50)
 FONT_FILL = (75, 75, 75)
 # monitor width and height. Used to calculate aspect ratio and crop image
 WIDTH = ctypes.windll.user32.GetSystemMetrics(0)
@@ -91,13 +91,15 @@ ctypes.windll.shcore.SetProcessDpiAwareness(2)
 # get newest folder
 response = requests.get(URL)
 soup = BeautifulSoup(response.text, 'lxml')
-newestFolder = soup.find_all('a', href=True)[5]
+# newestFolder = soup.find_all('a', href=True)[5]
+newestFolder = soup.find('a', href=re.compile(r'^\d+'))
 
 # get newest image
 directoryURL = URL + newestFolder['href']
 response = requests.get(directoryURL)
 soup = BeautifulSoup(response.text, 'lxml')
-newestImage = soup.find_all('a', href=True)[5]
+# newestImage = soup.find_all('a', href=True)[5]
+newestImage = soup.find('a', href=re.compile(r'GOES17'))
 
 # save timestamp info and download newest image
 imageURL = directoryURL + newestImage['href']
