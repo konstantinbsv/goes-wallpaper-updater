@@ -107,4 +107,5 @@ create_timestamp_file(newestImage.text)
 
 # crop image and set wallpaper
 create_cropped_image()
+watermark_image(CROPPED_IMG_PATH, get_timestamp(newestImage.text))
 set_wallpaper()
