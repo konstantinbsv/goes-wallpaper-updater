@@ -55,7 +55,7 @@ def get_timestamp(filename):
 
 
 def create_info_file(image_name):
-    local_time = datetime.datetime.now().strftime('%H:%M:%S')
+    local_time = datetime.now().strftime('%H:%M:%S')
     with open('info.txt', 'w') as handler:
         handler.write('Downloaded: ' + image_name + " at local time: " + local_time)
 
