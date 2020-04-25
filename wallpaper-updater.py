@@ -15,7 +15,6 @@ import ctypes
 # for cropping image and watermarking
 from PIL import Image, ImageDraw, ImageFont
 
-
 # url to directory with full disk, false colour images
 URL = 'http://www.pi.net/GOES_IMAGES/goes17/fd/fc/'
 # regex for extracting time and date
@@ -45,14 +44,6 @@ def save_image(url):
         handler.write(img_data)
 
 
-def create_timestamp_file(timestamp):
-    local_time = \
-        str(time.localtime().tm_hour) + ':' + \
-        str(time.localtime().tm_min)
-    with open('timestamp.txt', 'w') as handler:
-        handler.write(timestamp + " local time: " + local_time)
-
-
 def get_timestamp(filename):
     img_ts = re.search(TS_REGEX, filename)
     utc_time = datetime(
@@ -63,9 +54,15 @@ def get_timestamp(filename):
     return localized_home_timestamp.strftime(TIME_FORMAT)
 
 
+def create_info_file(image_name):
+    local_time = datetime.datetime.now().strftime('%H:%M:%S')
+    with open('info.txt', 'w') as handler:
+        handler.write('Downloaded: ' + image_name + " at local time: " + local_time)
+
+
 def watermark_image(image_path, watermark_string):
     img = Image.open(image_path)
-    drawing = ImageDraw.Draw(img)   # make drawable
+    drawing = ImageDraw.Draw(img)  # make drawable
     drawing.text((img.width - 130, 2820), watermark_string, fill=FONT_FILL, font=FONT)
     img.save(CROPPED_IMG_PATH, quality=100)
 
@@ -80,7 +77,7 @@ def set_wallpaper():
 
 def create_cropped_image():
     full_img = Image.open(IMG_PATH)
-    crop_area = (0, 0, full_img.width, full_img.height * (HEIGHT/WIDTH))
+    crop_area = (0, 0, full_img.width, full_img.height * (HEIGHT / WIDTH))
     cropped_img = full_img.crop(crop_area)
     cropped_img.save(CROPPED_IMG_PATH, quality=100)
 
@@ -105,7 +102,7 @@ newestImage = soup.find('a', href=re.compile(r'GOES17'))
 imageURL = directoryURL + newestImage['href']
 print(newestImage.text)
 save_image(imageURL)
-create_timestamp_file(newestImage.text)
+create_info_file(newestImage.text)
 
 # crop image and set wallpaper
 create_cropped_image()
