@@ -71,5 +71,5 @@ fabric.properties
 .idea/caches/build_file_checksums.ser
 
 # Custom
-timestamp.txt
+info.txt
 *.jpg
