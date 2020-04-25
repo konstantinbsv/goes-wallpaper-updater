@@ -63,6 +63,12 @@ def get_timestamp(filename):
     return localized_home_timestamp.strftime(TIME_FORMAT)
 
 
+def watermark_image(image_path, watermark_string):
+    img = Image.open(image_path)
+    drawing = ImageDraw.Draw(img)   # make drawable
+    drawing.text((img.width - 130, 2820), watermark_string, fill=FONT_FILL, font=FONT)
+    img.save(CROPPED_IMG_PATH, quality=100)
+
 
 def set_wallpaper():
     ctypes.windll.user32.SystemParametersInfoW(
