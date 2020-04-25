@@ -53,9 +53,14 @@ def create_timestamp_file(timestamp):
         handler.write(timestamp + " local time: " + local_time)
 
 
-
-
-
+def get_timestamp(filename):
+    img_ts = re.search(TS_REGEX, filename)
+    utc_time = datetime(
+        int(img_ts[1]), int(img_ts[2]), int(img_ts[3]),
+        int(img_ts[4]), int(img_ts[5]), int(img_ts[6]))
+    localized_utc_timestamp = UTC_TIMEZONE.localize(utc_time)
+    localized_home_timestamp = localized_utc_timestamp.astimezone(HOME_TIMEZONE)
+    return localized_home_timestamp.strftime(TIME_FORMAT)
 
 
 
@@ -96,5 +101,4 @@ create_timestamp_file(newestImage.text)
 
 # crop image and set wallpaper
 create_cropped_image()
-watermark_image(CROPPED_IMG_PATH, get_timestamp(newestImage.text))
 set_wallpaper()
