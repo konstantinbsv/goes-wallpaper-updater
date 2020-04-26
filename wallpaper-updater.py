@@ -16,7 +16,7 @@ import ctypes
 from PIL import Image, ImageDraw, ImageFont
 
 # url to directory with full disk, false colour images
-URL = 'http://www.pi.net/GOES_IMAGES/goes17/fd/fc/'
+URL = 'http://192.168.1.109/GOES_IMAGES/goes17/fd/fc/'
 # regex for extracting time and date
 TS_REGEX = r'_(\d{4})(\d{2})(\d{2})T(\d{2})(\d{2})(\d{2})'
 # from timezone list from: https://gist.github.com/heyalexej/8bf688fd67d7199be4a1682b3eec7568
@@ -31,7 +31,7 @@ IMG_PATH = os.getcwd() + os.path.sep + 'newest_image.jpg'
 # path to newest cropped image (absolute path must be used with ctypes)
 CROPPED_IMG_PATH = os.getcwd() + os.path.sep + 'newest_cropped_image.jpg'
 # watermark definitions
-FONT = ImageFont.truetype(font="arial.ttf", size=50)
+FONT = ImageFont.truetype(font="arialbd.ttf", size=50)
 FONT_FILL = (75, 75, 75)
 # monitor width and height. Used to calculate aspect ratio and crop image
 WIDTH = ctypes.windll.user32.GetSystemMetrics(0)
@@ -63,7 +63,7 @@ def create_info_file(image_name):
 def watermark_image(image_path, watermark_string):
     img = Image.open(image_path)
     drawing = ImageDraw.Draw(img)  # make drawable
-    drawing.text((img.width - 130, 2820), watermark_string, fill=FONT_FILL, font=FONT)
+    drawing.text((img.width - 155, 2830), watermark_string, fill=FONT_FILL, font=FONT)
     img.save(CROPPED_IMG_PATH, quality=100)
 
 
