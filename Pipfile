@@ -11,6 +11,3 @@ beautifulsoup4 = "==4.9.0"
 pillow = "==7.1.2"
 pytz = "==2019.3"
 lxml = "*"
-
-[requires]
-python_version = "3.7"
