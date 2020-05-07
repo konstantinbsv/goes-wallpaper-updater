@@ -1,1 +1,1 @@
-.\venv\Scripts\pythonw.exe .\wallpaper-updater.py
+pipenv run pythonw .\wallpaper-updater.py
