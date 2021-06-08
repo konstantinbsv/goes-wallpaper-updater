@@ -8,6 +8,6 @@ verify_ssl = true
 [packages]
 requests = "==2.23.0"
 beautifulsoup4 = "==4.9.0"
-pillow = "==7.1.2"
+pillow = "==8.2.0"
 pytz = "==2019.3"
 lxml = "*"
